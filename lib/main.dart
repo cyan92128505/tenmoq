@@ -25,7 +25,7 @@ class TenmoqView extends StatefulWidget {
 
 class _TenmoqViewState extends State<TenmoqView> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
-  var qrText = "";
+  String qrText = '';
   QRViewController controller;
 
   @override
@@ -34,14 +34,14 @@ class _TenmoqViewState extends State<TenmoqView> {
       body: Column(
         children: <Widget>[
           Expanded(
-            flex: 1,
+            flex: 2,
             child: QRView(
               key: qrKey,
               onQRViewCreated: _onQRViewCreated,
             ),
           ),
           Expanded(
-            flex: 5,
+            flex: 4,
             child: Center(
               child: Text('Scan result: $qrText'),
             ),
