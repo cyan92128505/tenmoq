@@ -1,7 +1,7 @@
 // This is a generated file; do not edit or check into version control.
 FLUTTER_ROOT=/Users/aomashinku/flutter
 FLUTTER_APPLICATION_PATH=/Users/aomashinku/Dev/aoma/tenmoq
-FLUTTER_TARGET=lib/main.dart
+FLUTTER_TARGET=/Users/aomashinku/Dev/aoma/tenmoq/lib/main.dart
 FLUTTER_BUILD_DIR=build
 SYMROOT=${SOURCE_ROOT}/../build/ios
 FLUTTER_FRAMEWORK_DIR=/Users/aomashinku/flutter/bin/cache/artifacts/engine/ios
