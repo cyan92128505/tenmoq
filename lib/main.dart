@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 import 'redux/app/state.dart';
 import 'redux/app/middleware.dart';
 import 'redux/app/reducer.dart';
-import 'redux/setting/state.dart';
+import 'view/pages/index.dart';
+import 'routes.dart';
 
 void main() => runApp(ReduxApp(getReduxAppConfig()));
 
@@ -54,83 +54,25 @@ class _ReduxAppState extends State<ReduxApp> {
       child: StoreConnector<AppState, AppState>(
         converter: (Store<AppState> store) => store.state,
         builder: (BuildContext context, AppState state) {
-          return Tenmoq(state);
+          return MaterialApp(
+              navigatorKey: widget.config.navigatorKey,
+              debugShowCheckedModeBanner: false,
+              title: 'Tenmoq',
+              initialRoute: AppRoutes.splash,
+              onGenerateRoute: (RouteSettings settings) {
+                switch (settings.name) {
+                  case AppRoutes.splash:
+                    return NoTransitionRoute(
+                        builder: (_) => SplashPage(), settings: settings);
+                  case AppRoutes.home:
+                    return NoTransitionRoute(
+                        builder: (_) => HomePage(state), settings: settings);
+                  default:
+                    return null;
+                }
+              });
         },
       ),
     );
-  }
-}
-
-class Tenmoq extends StatelessWidget {
-  final AppState state;
-  Tenmoq(this.state);
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Tenmoq',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: TenmoqView(state),
-    );
-  }
-}
-
-class TenmoqView extends StatefulWidget {
-  final AppState state;
-
-  TenmoqView(this.state);
-  @override
-  _TenmoqViewState createState() => _TenmoqViewState();
-}
-
-class _TenmoqViewState extends State<TenmoqView> {
-  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
-  String qrText = '';
-  QRViewController controller;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            flex: 2,
-            child: QRView(
-              key: qrKey,
-              onQRViewCreated: _onQRViewCreated,
-            ),
-          ),
-          Expanded(
-            flex: 4,
-            child: Center(
-              child: Text('Scan result: $qrText'),
-            ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Center(
-              child: Text('version: ${widget.state.settingState.version}'),
-            ),
-          )
-        ],
-      ),
-    );
-  }
-
-  void _onQRViewCreated(QRViewController controller) {
-    this.controller = controller;
-    controller.scannedDataStream.listen((scanData) {
-      setState(() {
-        qrText = scanData;
-      });
-    });
-  }
-
-  @override
-  void dispose() {
-    controller?.dispose();
-    super.dispose();
   }
 }
