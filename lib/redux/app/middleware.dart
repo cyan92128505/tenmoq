@@ -1,10 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'package:tenmoq/data/repositories/persistence_repository.dart';
 import 'package:tenmoq/utils/file_storage.dart';
-import 'package:tenmoq/redux/setting/state.dart';
 
 import 'actions.dart';
 import 'state.dart';
