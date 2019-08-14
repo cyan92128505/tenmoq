@@ -35,28 +35,31 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            flex: 2,
-            child: QRView(
-              key: qrKey,
-              onQRViewCreated: _onQRViewCreated,
+      body: SafeArea(
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              flex: 2,
+              child: QRView(
+                key: qrKey,
+                onQRViewCreated: _onQRViewCreated,
+              ),
             ),
-          ),
-          Expanded(
-            flex: 4,
-            child: Center(
-              child: Text('Scan result: $qrText'),
+            Expanded(
+              flex: 4,
+              child: Column(
+                children: <Widget>[
+                  Expanded(
+                    child: Center(
+                      child: Text('Scan result: $qrText'),
+                    ),
+                  ),
+                  Text('version: ${widget.state.settingState.version}')
+                ],
+              ),
             ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Center(
-              child: Text('version: ${widget.state.settingState.version}'),
-            ),
-          )
-        ],
+          ],
+        ),
       ),
     );
   }
