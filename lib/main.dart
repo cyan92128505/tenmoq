@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
-
-import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
+import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 import 'redux/app/state.dart';
 import 'redux/app/middleware.dart';
 import 'redux/app/reducer.dart';
+import 'redux/setting/state.dart';
 
-void main() => runApp(Tenmoq());
+void main() => runApp(ReduxApp(getReduxAppConfig()));
 
 ReduxAppConfig getReduxAppConfig() {
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -25,6 +27,38 @@ class ReduxAppConfig {
   final GlobalKey<NavigatorState> navigatorKey;
   final Store<AppState> store;
   ReduxAppConfig({this.navigatorKey, this.store});
+}
+
+class ReduxApp extends StatefulWidget {
+  final ReduxAppConfig config;
+  ReduxApp(this.config);
+
+  @override
+  _ReduxAppState createState() => _ReduxAppState();
+}
+
+class _ReduxAppState extends State<ReduxApp> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+    return StoreProvider(
+      store: widget.config.store,
+      child: StoreConnector<AppState, SettingState>(
+        converter: (Store<AppState> store) => store.state.settingState,
+        builder: (BuildContext context, SettingState settingState) {
+          return Tenmoq();
+        },
+      ),
+    );
+  }
 }
 
 class Tenmoq extends StatelessWidget {
