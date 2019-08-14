@@ -69,6 +69,7 @@ dependencies:
 
   flutter_secure_storage:
   shared_preferences:
+  dynamic_widget:
 
 dev_dependencies:
   flutter_test:
