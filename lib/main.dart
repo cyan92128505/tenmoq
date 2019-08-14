@@ -1,8 +1,31 @@
 import 'package:flutter/material.dart';
 
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:redux/redux.dart';
+
+import 'redux/app/state.dart';
+import 'redux/app/middleware.dart';
+import 'redux/app/reducer.dart';
 
 void main() => runApp(Tenmoq());
+
+ReduxAppConfig getReduxAppConfig() {
+  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+  final Store<AppState> store = Store<AppState>(appReducer,
+      initialState: AppState(),
+      middleware: []..addAll(createStorePersistenceMiddleware()));
+
+  return ReduxAppConfig(
+    navigatorKey: navigatorKey,
+    store: store,
+  );
+}
+
+class ReduxAppConfig {
+  final GlobalKey<NavigatorState> navigatorKey;
+  final Store<AppState> store;
+  ReduxAppConfig({this.navigatorKey, this.store});
+}
 
 class Tenmoq extends StatelessWidget {
   // This widget is the root of your application.
