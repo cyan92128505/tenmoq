@@ -51,10 +51,10 @@ class _ReduxAppState extends State<ReduxApp> {
     ]);
     return StoreProvider(
       store: widget.config.store,
-      child: StoreConnector<AppState, SettingState>(
-        converter: (Store<AppState> store) => store.state.settingState,
-        builder: (BuildContext context, SettingState settingState) {
-          return Tenmoq();
+      child: StoreConnector<AppState, AppState>(
+        converter: (Store<AppState> store) => store.state,
+        builder: (BuildContext context, AppState state) {
+          return Tenmoq(state);
         },
       ),
     );
@@ -62,6 +62,8 @@ class _ReduxAppState extends State<ReduxApp> {
 }
 
 class Tenmoq extends StatelessWidget {
+  final AppState state;
+  Tenmoq(this.state);
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -70,12 +72,15 @@ class Tenmoq extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: TenmoqView(),
+      home: TenmoqView(state),
     );
   }
 }
 
 class TenmoqView extends StatefulWidget {
+  final AppState state;
+
+  TenmoqView(this.state);
   @override
   _TenmoqViewState createState() => _TenmoqViewState();
 }
@@ -101,6 +106,12 @@ class _TenmoqViewState extends State<TenmoqView> {
             flex: 4,
             child: Center(
               child: Text('Scan result: $qrText'),
+            ),
+          ),
+          Expanded(
+            flex: 2,
+            child: Center(
+              child: Text('version: ${widget.state.settingState.version}'),
             ),
           )
         ],
