@@ -6,6 +6,7 @@ import 'package:redux/redux.dart';
 import 'redux/app/state.dart';
 import 'redux/app/middleware.dart';
 import 'redux/app/reducer.dart';
+import 'parsers/index.dart';
 import 'view/pages/index.dart';
 import 'routes.dart';
 
@@ -16,6 +17,8 @@ ReduxAppConfig getReduxAppConfig() {
   final Store<AppState> store = Store<AppState>(appReducer,
       initialState: AppState(),
       middleware: []..addAll(createStorePersistenceMiddleware()));
+
+  CustomParserTool.setup();
 
   return ReduxAppConfig(
     navigatorKey: navigatorKey,

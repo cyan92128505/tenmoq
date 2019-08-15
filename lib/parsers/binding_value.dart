@@ -57,6 +57,8 @@ class BindindValueView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(viewModel.tree[bindingTarget]);
+    return bindingTarget != null
+        ? Text(viewModel.tree[bindingTarget])
+        : Container();
   }
 }

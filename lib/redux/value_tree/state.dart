@@ -7,7 +7,9 @@ abstract class ValueTreeState
     implements Built<ValueTreeState, ValueTreeStateBuilder> {
   factory ValueTreeState() {
     return _$ValueTreeState._(
-      tree: {},
+      tree: {
+        'demo': 'DEMO',
+      },
     );
   }
 
