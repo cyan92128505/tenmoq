@@ -33,7 +33,10 @@ class BindindValueWrapper extends StatelessWidget {
     return StoreConnector<AppState, BindindValueVM>(
       converter: BindindValueVM.fromStore,
       builder: (BuildContext context, BindindValueVM viewModel) {
-        return BindindValueView(viewModel, bindingTarget);
+        return BindindValueView(
+          viewModel,
+          bindingTarget,
+        );
       },
     );
   }
@@ -45,7 +48,9 @@ class BindindValueVM {
     @required this.tree,
   });
   static BindindValueVM fromStore(Store<AppState> store) {
-    return BindindValueVM(tree: store.state.valueTreeState.tree);
+    return BindindValueVM(
+      tree: store.state.valueTreeState.tree,
+    );
   }
 }
 

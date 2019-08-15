@@ -2,7 +2,7 @@ import 'package:redux/redux.dart';
 import 'state.dart';
 import 'actions.dart';
 
-final Reducer<ValueTreeState> settingStateReducer =
+final Reducer<ValueTreeState> valueTreeStateReducer =
     combineReducers<ValueTreeState>(
   [
     TypedReducer<ValueTreeState, UpdateValueTree>(_updateValueTree),
@@ -10,8 +10,10 @@ final Reducer<ValueTreeState> settingStateReducer =
 );
 
 ValueTreeState _updateValueTree(
-    ValueTreeState valueTreeState, UpdateValueTree action) {
-  Map<String, dynamic> _map = valueTreeState.tree;
+  ValueTreeState state,
+  UpdateValueTree action,
+) {
+  Map<String, dynamic> _map = state.tree;
   _map[action.target] = action.value;
-  return valueTreeState.rebuild((b) => b..tree = _map);
+  return state.rebuild((b) => b..tree = _map);
 }

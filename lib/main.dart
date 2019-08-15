@@ -14,9 +14,13 @@ void main() => runApp(ReduxApp(getReduxAppConfig()));
 
 ReduxAppConfig getReduxAppConfig() {
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-  final Store<AppState> store = Store<AppState>(appReducer,
-      initialState: AppState(),
-      middleware: []..addAll(createStorePersistenceMiddleware()));
+  final Store<AppState> store = Store<AppState>(
+    appReducer,
+    initialState: AppState(),
+    middleware: []..addAll(
+        createStorePersistenceMiddleware(),
+      ),
+  );
 
   CustomParserTool.setup();
 

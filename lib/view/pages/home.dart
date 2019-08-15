@@ -1,3 +1,4 @@
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -5,6 +6,7 @@ import 'package:redux/redux.dart';
 import 'package:dynamic_widget/dynamic_widget.dart';
 
 import 'package:tenmoq/redux/app/state.dart';
+import 'package:tenmoq/redux/value_tree/actions.dart';
 
 class HomePage extends StatelessWidget {
   final AppState state;
@@ -29,13 +31,27 @@ class HomePage extends StatelessWidget {
 
 class HomeVM {
   final Store<AppState> store;
+  final String version;
+  final void Function() changeDemo;
 
   HomeVM({
     @required this.store,
+    @required this.version,
+    @required this.changeDemo,
   });
 
   static HomeVM fromStore(Store<AppState> store) {
-    return HomeVM(store: store);
+    return HomeVM(
+        store: store,
+        version: store.state.settingState.version,
+        changeDemo: () {
+          String _value = 'DEMO: ${math.Random.secure().nextInt(100)}';
+          print(_value);
+          store.dispatch(UpdateValueTree(
+            'demo',
+            _value,
+          ));
+        });
   }
 }
 
@@ -52,12 +68,10 @@ class _HomeViewState extends State<HomeView> {
   String qrText = '';
   QRViewController controller;
 
-  String jsonString = '''
-{
-  "type": "BindingValue",
-  "binding_target": "demo"
-}
-  ''';
+  String jsonString = '''{
+    "type": "BindingValue",
+    "binding_target": "demo"
+  }''';
 
   @override
   void initState() {
@@ -95,8 +109,16 @@ class _HomeViewState extends State<HomeView> {
                       ),
                     ),
                   ),
+                  Expanded(
+                    child: Center(
+                      child: RaisedButton(
+                        onPressed: widget.viewModel.changeDemo,
+                        child: Text('CHANGE'),
+                      ),
+                    ),
+                  ),
                   Text(
-                    'version: ${widget.viewModel.store.state.settingState.version}',
+                    'version: ${widget.viewModel.version}',
                   )
                 ],
               ),
