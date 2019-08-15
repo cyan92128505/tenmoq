@@ -7,6 +7,7 @@ import 'package:dynamic_widget/dynamic_widget.dart';
 
 import 'package:tenmoq/redux/app/state.dart';
 import 'package:tenmoq/redux/value_tree/actions.dart';
+import 'package:tenmoq/parsers/index.dart';
 
 class HomePage extends StatelessWidget {
   final AppState state;
@@ -70,7 +71,14 @@ class _HomeViewState extends State<HomeView> {
 
   String jsonString = '''{
     "type": "BindingValue",
-    "binding_target": "demo"
+    "binding_target": "demo",
+    "child": {
+      "type": "Text",
+      "data": "",
+      "style": {
+        "color": "#FF00FF"
+      }
+    }
   }''';
 
   @override
@@ -142,12 +150,5 @@ class _HomeViewState extends State<HomeView> {
   void dispose() {
     controller?.dispose();
     super.dispose();
-  }
-}
-
-class DefaultClickListener implements ClickListener {
-  @override
-  void onClicked(String event) {
-    print("Receive click event: " + event);
   }
 }

@@ -12,3 +12,10 @@ class CustomParserTool {
     DynamicWidgetBuilder.addParser(BindingValueParser());
   }
 }
+
+class DefaultClickListener implements ClickListener {
+  @override
+  void onClicked(String event) {
+    print("Receive click event: " + event);
+  }
+}

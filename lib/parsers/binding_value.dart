@@ -4,6 +4,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:dynamic_widget/dynamic_widget.dart';
 
 import 'package:tenmoq/redux/app/state.dart';
+import 'index.dart';
 
 class BindingValueParser extends WidgetParser {
   @override
@@ -20,13 +21,16 @@ class BindingValueParser extends WidgetParser {
     String bindingTarget =
         map.containsKey('binding_target') ? map['binding_target'] : '';
 
-    return BindindValueWrapper(bindingTarget);
+    Map<String, dynamic> childMap = map['child'];
+
+    return BindindValueWrapper(bindingTarget, childMap);
   }
 }
 
 class BindindValueWrapper extends StatelessWidget {
   final String bindingTarget;
-  BindindValueWrapper(this.bindingTarget);
+  final Map<String, dynamic> childMap;
+  BindindValueWrapper(this.bindingTarget, this.childMap);
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +40,7 @@ class BindindValueWrapper extends StatelessWidget {
         return BindindValueView(
           viewModel,
           bindingTarget,
+          childMap,
         );
       },
     );
@@ -57,13 +62,14 @@ class BindindValueVM {
 class BindindValueView extends StatelessWidget {
   final BindindValueVM viewModel;
   final String bindingTarget;
+  final Map<String, dynamic> childMap;
 
-  BindindValueView(this.viewModel, this.bindingTarget);
+  BindindValueView(this.viewModel, this.bindingTarget, this.childMap);
 
   @override
   Widget build(BuildContext context) {
-    return bindingTarget != null
-        ? Text(viewModel.tree[bindingTarget])
-        : Container();
+    childMap['data'] = viewModel.tree[bindingTarget];
+    return DynamicWidgetBuilder.buildFromMap(
+        childMap, context, DefaultClickListener());
   }
 }
