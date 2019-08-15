@@ -3,6 +3,7 @@ import 'package:built_value/standard_json_plugin.dart';
 
 import 'package:tenmoq/redux/app/state.dart';
 import 'package:tenmoq/redux/setting/state.dart';
+import 'package:tenmoq/redux/value_tree/state.dart';
 
 part 'serializers.g.dart';
 

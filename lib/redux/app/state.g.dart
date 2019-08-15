@@ -24,6 +24,9 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
       'settingState',
       serializers.serialize(object.settingState,
           specifiedType: const FullType(SettingState)),
+      'valueTreeState',
+      serializers.serialize(object.valueTreeState,
+          specifiedType: const FullType(ValueTreeState)),
     ];
 
     return result;
@@ -48,6 +51,10 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
           result.settingState.replace(serializers.deserialize(value,
               specifiedType: const FullType(SettingState)) as SettingState);
           break;
+        case 'valueTreeState':
+          result.valueTreeState.replace(serializers.deserialize(value,
+              specifiedType: const FullType(ValueTreeState)) as ValueTreeState);
+          break;
       }
     }
 
@@ -60,16 +67,22 @@ class _$AppState extends AppState {
   final bool isLoading;
   @override
   final SettingState settingState;
+  @override
+  final ValueTreeState valueTreeState;
 
   factory _$AppState([void Function(AppStateBuilder) updates]) =>
       (new AppStateBuilder()..update(updates)).build();
 
-  _$AppState._({this.isLoading, this.settingState}) : super._() {
+  _$AppState._({this.isLoading, this.settingState, this.valueTreeState})
+      : super._() {
     if (isLoading == null) {
       throw new BuiltValueNullFieldError('AppState', 'isLoading');
     }
     if (settingState == null) {
       throw new BuiltValueNullFieldError('AppState', 'settingState');
+    }
+    if (valueTreeState == null) {
+      throw new BuiltValueNullFieldError('AppState', 'valueTreeState');
     }
   }
 
@@ -85,19 +98,22 @@ class _$AppState extends AppState {
     if (identical(other, this)) return true;
     return other is AppState &&
         isLoading == other.isLoading &&
-        settingState == other.settingState;
+        settingState == other.settingState &&
+        valueTreeState == other.valueTreeState;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, isLoading.hashCode), settingState.hashCode));
+    return $jf($jc($jc($jc(0, isLoading.hashCode), settingState.hashCode),
+        valueTreeState.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('AppState')
           ..add('isLoading', isLoading)
-          ..add('settingState', settingState))
+          ..add('settingState', settingState)
+          ..add('valueTreeState', valueTreeState))
         .toString();
   }
 }
@@ -115,12 +131,19 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   set settingState(SettingStateBuilder settingState) =>
       _$this._settingState = settingState;
 
+  ValueTreeStateBuilder _valueTreeState;
+  ValueTreeStateBuilder get valueTreeState =>
+      _$this._valueTreeState ??= new ValueTreeStateBuilder();
+  set valueTreeState(ValueTreeStateBuilder valueTreeState) =>
+      _$this._valueTreeState = valueTreeState;
+
   AppStateBuilder();
 
   AppStateBuilder get _$this {
     if (_$v != null) {
       _isLoading = _$v.isLoading;
       _settingState = _$v.settingState?.toBuilder();
+      _valueTreeState = _$v.valueTreeState?.toBuilder();
       _$v = null;
     }
     return this;
@@ -145,12 +168,16 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
     try {
       _$result = _$v ??
           new _$AppState._(
-              isLoading: isLoading, settingState: settingState.build());
+              isLoading: isLoading,
+              settingState: settingState.build(),
+              valueTreeState: valueTreeState.build());
     } catch (_) {
       String _$failedField;
       try {
         _$failedField = 'settingState';
         settingState.build();
+        _$failedField = 'valueTreeState';
+        valueTreeState.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'AppState', _$failedField, e.toString());
