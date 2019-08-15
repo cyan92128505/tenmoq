@@ -76,7 +76,8 @@ class _HomeViewState extends State<HomeView> {
       "type": "Text",
       "data": "",
       "style": {
-        "color": "#FF00FF"
+        "color": "#519ABA",
+        "fontSize": 30.0
       }
     }
   }''';
@@ -103,26 +104,23 @@ class _HomeViewState extends State<HomeView> {
               flex: 4,
               child: Column(
                 children: <Widget>[
-                  Expanded(
-                    child: Center(
-                      child: Text('Scan result: $qrText'),
+                  Center(
+                    child: Text('Scan result: $qrText'),
+                  ),
+                  Center(
+                    child: Text(jsonString),
+                  ),
+                  Center(
+                    child: DynamicWidgetBuilder().build(
+                      jsonString,
+                      context,
+                      DefaultClickListener(),
                     ),
                   ),
-                  Expanded(
-                    child: Center(
-                      child: DynamicWidgetBuilder().build(
-                        jsonString,
-                        context,
-                        DefaultClickListener(),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Center(
-                      child: RaisedButton(
-                        onPressed: widget.viewModel.changeDemo,
-                        child: Text('CHANGE'),
-                      ),
+                  Center(
+                    child: RaisedButton(
+                      onPressed: widget.viewModel.changeDemo,
+                      child: Text('CHANGE'),
                     ),
                   ),
                   Text(
